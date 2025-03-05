@@ -21,3 +21,11 @@ systemctl reboot
 - Hardened kernel tunables
 - run0 instead of sudo
 - countme disabled
+
+## Adding Flathub
+
+Please use this command, as this only allows verified apps:
+
+```bash
+flatpak remote-add --if-not-exists --subset=verified flathub-verified https://flathub.org/repo/flathub.flatpakrepo
+```
