@@ -1,13 +1,16 @@
 # scudo
 FROM quay.io/centos/centos:stream10 AS scudo
 
+# Dependencies
 RUN dnf install -y gcc-c++ kernel-headers
 
+# Download scudo
 RUN curl -sO "https://android.googlesource.com/platform/external/scudo/+archive/ad3335c7b5769bcee16be0d47c48089ada488857/standalone.tar.gz" && \
     mkdir scudo && \
     tar xf standalone.tar.gz -C scudo && \
     rm standalone.tar.gz
 
+# Build scudo
 RUN cd scudo && \
     g++ -fPIC -Iinclude -c *.cpp && \
     g++ -shared -o libscudo.so *.o
@@ -44,3 +47,6 @@ RUN dnf install usbguard -y && systemctl disable usbguard
 RUN sed -i -e s,countme=1,countme=0, /usr/etc/yum.repos.d/*.repo
 RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo
 RUN systemctl mask rpm-ostree-countme.timer
+
+# Good practice
+RUN bootc container lint
