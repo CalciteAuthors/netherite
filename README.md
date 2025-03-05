@@ -29,3 +29,9 @@ Please use this command, as this only allows verified apps:
 ```bash
 flatpak remote-add --if-not-exists --subset=verified flathub-verified https://flathub.org/repo/flathub.flatpakrepo
 ```
+
+Or if you already enabled it, please run:
+
+```bash
+flatpak remote-modify --subset=verified flathub
+```
