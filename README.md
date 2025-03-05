@@ -13,8 +13,8 @@ systemctl reboot
 
 ## Features
 
-- scudo memory allocator
-- `time.cifelli.xyz` time server
+- hardened_malloc
+- `time.grapheneos.org` time server
 - Trivalent instead of Firefox
 - usbguard (you'll need to configure it yourself)
 - NetworkManager privacy

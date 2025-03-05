@@ -1,26 +1,22 @@
-# scudo
-FROM quay.io/centos/centos:stream10 AS scudo
+# hardened_malloc
+FROM quay.io/centos/centos:stream10 AS hardened_malloc
 
 # Dependencies
-RUN dnf install -y gcc-c++ kernel-headers
+RUN dnf install -y git gcc gcc-c++ make
 
-# Download scudo
-RUN curl -sO "https://android.googlesource.com/platform/external/scudo/+archive/ad3335c7b5769bcee16be0d47c48089ada488857/standalone.tar.gz" && \
-    mkdir scudo && \
-    tar xf standalone.tar.gz -C scudo && \
-    rm standalone.tar.gz
+# Download hardened_malloc
+RUN git clone --depth=1 --single-branch --branch=main https://github.com/GrapheneOS/hardened_malloc.git
 
-# Build scudo
-RUN cd scudo && \
-    g++ -fPIC -Iinclude -c *.cpp && \
-    g++ -shared -o libscudo.so *.o
+# Build hardened_malloc
+RUN cd hardened_malloc && \
+    make
 
 # Netherite build
 FROM ghcr.io/calciteauthors/calcite:c10s AS netherite
 
-# scudo
-COPY --from=scudo /scudo/libscudo.so /usr/lib64/libscudo.so
-RUN echo /usr/lib64/libscudo.so >> /etc/ld.so.preload
+# hardened_malloc
+COPY --from=hardened_malloc /hardened_malloc/out/libhardened_malloc.so /usr/lib64/libhardened_malloc.so
+RUN echo /usr/lib64/libhardened_malloc.so >> /etc/ld.so.preload
 
 # Disable coredump
 COPY config/60-disable-coredump-limits-d.conf /etc/security/limits.d/60-disable-coredump.conf
