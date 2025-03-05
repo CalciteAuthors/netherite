@@ -22,6 +22,14 @@ FROM ghcr.io/calciteauthors/calcite:c10s AS netherite
 COPY --from=scudo /scudo/libscudo.so /usr/lib64/libscudo.so
 RUN echo /usr/lib64/libscudo.so >> /etc/ld.so.preload
 
+# Disable coredump
+COPY config/60-disable-coredump-limits-d.conf /etc/security/limits.d/60-disable-coredump.conf
+COPY config/60-disable-coredump.conf /etc/systemd/system.conf.d/60-disable-coredump.conf
+COPY config/60-disable-coredump.conf /etc/systemd/user.conf.d/60-disable-coredump.conf
+
+# Kernel tunables
+COPY config/tunables.conf /usr/lib/sysctl.d/tunables.conf
+
 # Trivalent
 COPY config/secureblue.repo /etc/yum.repos.d/secureblue.repo
 RUN dnf install epel-release -y && \
@@ -33,9 +41,6 @@ COPY config/chrony.conf /etc/chrony.conf
 
 # NetworkManager privacy
 COPY config/30-net-privacy.conf /usr/lib/NetworkManager/conf.d/30-net-privacy.conf
-
-# Kernel tunables
-COPY config/tunables.conf /usr/lib/sysctl.d/tunables.conf
 
 # usbguard
 RUN dnf install usbguard -y && systemctl disable usbguard
