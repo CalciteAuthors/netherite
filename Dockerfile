@@ -18,23 +18,17 @@ RUN cd scudo && \
 # Netherite build
 FROM ghcr.io/calciteauthors/calcite:c10s AS netherite
 
-# Create directories & files needed for build
-RUN mkdir -p /usr/etc
-
 # scudo
 COPY --from=scudo /scudo/libscudo.so /usr/lib64/libscudo.so
-RUN echo /usr/lib64/libscudo.so >> /usr/etc/ld.so.preload
 RUN echo /usr/lib64/libscudo.so >> /etc/ld.so.preload
 
 # Trivalent
-COPY config/secureblue.repo /usr/etc/yum.repos.d/secureblue.repo
 COPY config/secureblue.repo /etc/yum.repos.d/secureblue.repo
 RUN dnf install epel-release -y && \
     dnf config-manager --set-enabled crb && \
     dnf swap -y firefox trivalent
 
 # chrony
-COPY config/chrony.conf /usr/etc/chrony.conf
 COPY config/chrony.conf /etc/chrony.conf
 
 # NetworkManager privacy
@@ -47,7 +41,6 @@ COPY config/tunables.conf /usr/lib/sysctl.d/tunables.conf
 RUN dnf install usbguard -y && systemctl disable usbguard
 
 # countme
-RUN sed -i -e s,countme=1,countme=0, /usr/etc/yum.repos.d/*.repo
 RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo
 RUN systemctl mask rpm-ostree-countme.timer
 
