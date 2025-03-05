@@ -18,6 +18,9 @@ RUN cd scudo && \
 # Netherite build
 FROM ghcr.io/calciteauthors/calcite:c10s AS netherite
 
+# Create directories & files needed for build
+RUN mkdir -p /usr/etc
+
 # scudo
 COPY --from=scudo /scudo/libscudo.so /usr/lib64/libscudo.so
 RUN echo /usr/lib64/libscudo.so >> /usr/etc/ld.so.preload
