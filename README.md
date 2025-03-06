@@ -1,5 +1,7 @@
 # Netherite
 
+[![Docker](https://github.com/CalciteAuthors/netherite/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/CalciteAuthors/netherite/actions/workflows/docker-publish.yml)
+
 This is a reincarnation of Netherite, a hardened Linux distribution based on Calcite.
 
 It currently aims to replicate some of, largely the most important parts of secureblue's hardening, albeit in a more minimal way.
