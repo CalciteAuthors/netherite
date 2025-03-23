@@ -15,7 +15,7 @@ systemd-run -t bootc switch ghcr.io/calciteauthors/netherite:main --apply
 ## Features
 
 - hardened_malloc
-- `time.grapheneos.org` time server
+- `time.cifelli.xyz` time server (w/ NTS)
 - Trivalent instead of Firefox
 - usbguard (you'll need to configure it yourself)
 - NetworkManager privacy
