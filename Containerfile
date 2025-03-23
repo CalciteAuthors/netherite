@@ -12,7 +12,7 @@ RUN cd hardened_malloc && \
     make
 
 # Netherite build
-FROM ghcr.io/calciteauthors/calcite:c10s AS netherite
+FROM ghcr.io/calciteauthors/calcite:main AS netherite
 
 # hardened_malloc
 COPY --from=hardened_malloc /hardened_malloc/out/libhardened_malloc.so /usr/lib64/libhardened_malloc.so
