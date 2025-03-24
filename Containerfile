@@ -49,4 +49,4 @@ RUN systemctl mask rpm-ostree-countme.timer
 RUN rpm --nodeps -e sudo sudo-python-plugin
 
 # Good practice
-RUN bootc container lint && ostree container commit
+RUN bootc container lint
