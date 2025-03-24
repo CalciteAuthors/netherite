@@ -1,5 +1,5 @@
 # hardened_malloc
-FROM quay.io/centos/centos:stream10 AS hardened_malloc
+FROM quay.io/almalinuxorg/almalinux:10-kitten AS hardened_malloc
 
 # Dependencies
 RUN dnf install -y git gcc gcc-c++ make
@@ -12,7 +12,7 @@ RUN cd hardened_malloc && \
     make
 
 # Netherite build
-FROM ghcr.io/calciteauthors/calcite:main AS netherite
+FROM ghcr.io/calciteauthors/calcite:a10s AS netherite
 
 # hardened_malloc
 COPY --from=hardened_malloc /hardened_malloc/out/libhardened_malloc.so /usr/lib64/libhardened_malloc.so
