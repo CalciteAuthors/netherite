@@ -7,7 +7,7 @@ It currently aims to replicate some of, largely the most important parts of secu
 Currently the installation process is similar to secureblue's; install Calcite and then rebase to our image:
 
 ```bash
-systemd-run -t bootc switch ghcr.io/calciteauthors/netherite:a10s --apply
+systemd-run -t bootc switch ghcr.io/calciteauthors/netherite:main --apply
 ```
 
 ## Features
